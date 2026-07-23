@@ -1,0 +1,51 @@
+.dock {
+  position: fixed;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: var(--shadow-md);
+  z-index: 90;
+}
+
+.action {
+  width: 2.8rem;
+  height: 2.8rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--gray-50);
+  color: var(--accent);
+  display: grid;
+  place-items: center;
+  transition: transform var(--transition-fast), background var(--transition-normal), color var(--transition-normal);
+}
+
+.action:hover {
+  transform: translateY(-1px);
+  background: var(--accent-bg);
+  color: var(--accent-dark);
+}
+
+.icon {
+  width: 0.95rem;
+  height: 0.95rem;
+}
+
+@media (max-width: 900px) {
+  .dock {
+    right: 0.6rem;
+    padding: 0.55rem;
+    gap: 0.5rem;
+  }
+
+  .action {
+    width: 2.45rem;
+    height: 2.45rem;
+  }
+}

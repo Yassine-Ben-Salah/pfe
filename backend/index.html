@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rapport Search</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0f0f11;
+    --bg2: #17171a;
+    --bg3: #1e1e23;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.14);
+    --text: #f0eff4;
+    --text2: #9996a8;
+    --text3: #5e5c6e;
+    --accent: #7c6aff;
+    --accent2: #a89cff;
+    --accent-bg: rgba(124,106,255,0.12);
+    --green: #34d399;
+    --green-bg: rgba(52,211,153,0.1);
+    --amber: #fbbf24;
+    --amber-bg: rgba(251,191,36,0.1);
+    --red: #f87171;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* HEADER */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    position: sticky;
+    top: 0;
+    background: rgba(15,15,17,0.9);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+  }
+  .logo-dot {
+    width: 28px; height: 28px;
+    background: var(--accent);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+  }
+  .status-pill {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: var(--green-bg);
+    color: var(--green);
+    border: 1px solid rgba(52,211,153,0.2);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .status-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* LAYOUT */
+  .main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem;
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    position: sticky;
+    top: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .panel {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.25rem;
+  }
+
+  .panel-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 1rem;
+  }
+
+  label {
+    display: block;
+    font-size: 12px;
+    color: var(--text2);
+    margin-bottom: 5px;
+    font-weight: 500;
+  }
+
+  input[type="text"],
+  input[type="number"],
+  select,
+  textarea {
+    width: 100%;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    padding: 9px 12px;
+    outline: none;
+    transition: border-color 0.15s;
+    margin-bottom: 0.85rem;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(124,106,255,0.15);
+  }
+  textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
+
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  .toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.85rem;
+    font-size: 13px;
+    color: var(--text2);
+  }
+  .toggle {
+    width: 36px; height: 20px;
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    border-radius: 20px;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .toggle::after {
+    content: '';
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--text3);
+    position: absolute;
+    left: 2px; top: 2px;
+    transition: transform 0.2s, background 0.2s;
+  }
+  .toggle.on { background: var(--accent-bg); border-color: var(--accent); }
+  .toggle.on::after { transform: translateX(16px); background: var(--accent); }
+
+  .weight-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0.85rem;
+  }
+  .weight-row span {
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    color: var(--accent2);
+    width: 32px;
+    flex-shrink: 0;
+    text-align: right;
+  }
+  input[type="range"] {
+    flex: 1;
+    accent-color: var(--accent);
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  /* SEARCH BUTTON */
+  .btn-search {
+    width: 100%;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 11px;
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    transition: opacity 0.15s, transform 0.1s;
+  }
+  .btn-search:hover { opacity: 0.9; }
+  .btn-search:active { transform: scale(0.98); }
+  .btn-search:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+  /* API ENDPOINT DISPLAY */
+  .api-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text3);
+    word-break: break-all;
+    line-height: 1.6;
+  }
+  .api-badge span {
+    color: var(--accent2);
+  }
+
+  /* RESULTS */
+  .results-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  .results-count {
+    font-size: 13px;
+    color: var(--text2);
+  }
+  .results-count strong { color: var(--text); }
+
+  .empty-state {
+    border: 1px dashed var(--border2);
+    border-radius: 14px;
+    padding: 4rem 2rem;
+    text-align: center;
+    color: var(--text3);
+  }
+  .empty-icon { font-size: 2.5rem; margin-bottom: 0.75rem; opacity: 0.4; }
+  .empty-state p { font-size: 14px; }
+
+  /* RESULT CARD */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.25rem;
+    margin-bottom: 0.85rem;
+    transition: border-color 0.15s;
+    animation: fadeUp 0.25s ease both;
+  }
+  .card:hover { border-color: var(--border2); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .card-rank {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text3);
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+
+  .score-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    flex-shrink: 0;
+  }
+  .score-high { background: var(--green-bg); color: var(--green); }
+  .score-mid  { background: var(--amber-bg); color: var(--amber); }
+  .score-low  { background: rgba(248,113,113,0.1); color: var(--red); }
+
+  .card-meta {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 0.85rem;
+  }
+
+  .meta-item {
+    background: var(--bg3);
+    border-radius: 8px;
+    padding: 8px 10px;
+  }
+  .meta-label {
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+  .meta-value {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .damage-text {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.55;
+    padding: 10px 12px;
+    background: var(--bg3);
+    border-radius: 8px;
+    margin-bottom: 0.85rem;
+    border-left: 2px solid var(--accent);
+  }
+
+  .filename-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text3);
+    margin-bottom: 0.85rem;
+  }
+
+  /* PRICE TABLE */
+  .price-section {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 0.85rem;
+  }
+  .price-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  .price-table thead tr {
+    background: var(--bg3);
+  }
+  .price-table th {
+    padding: 7px 12px;
+    text-align: left;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text3);
+    font-weight: 600;
+  }
+  .price-table th:last-child, .price-table td:last-child {
+    text-align: right;
+  }
+  .price-table th:nth-child(2), .price-table td:nth-child(2) {
+    text-align: right;
+  }
+  .price-table td {
+    padding: 6px 12px;
+    color: var(--text2);
+    border-top: 1px solid var(--border);
+  }
+
+  .totals-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .total-chip {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+  .total-chip .lbl { color: var(--text3); font-size: 10px; display: block; }
+  .total-chip .val { color: var(--text); font-weight: 500; font-family: 'DM Mono', monospace; }
+
+  /* LOADING */
+  .loading {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text3);
+    font-size: 14px;
+  }
+  .spinner {
+    width: 28px; height: 28px;
+    border: 2px solid var(--border2);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    margin: 0 auto 1rem;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ERROR */
+  .error-box {
+    background: rgba(248,113,113,0.08);
+    border: 1px solid rgba(248,113,113,0.2);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    font-size: 13px;
+    color: var(--red);
+    margin-bottom: 1rem;
+  }
+
+  @media (max-width: 800px) {
+    .main { grid-template-columns: 1fr; }
+    .sidebar { position: static; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-dot">⚡</div>
+    Rapport Search
+  </div>
+  <div class="status-pill" id="status-pill">
+    <div class="status-dot"></div>
+    checking…
+  </div>
+</header>
+
+<div class="main">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <div class="panel">
+      <div class="panel-title">Paramètres API</div>
+      <label>URL de l'API</label>
+      <input type="text" id="api-url" value="http://localhost:8000" placeholder="http://localhost:8000">
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">Recherche</div>
+
+      <label>Marque du véhicule</label>
+      <input type="text" id="marque" placeholder="ex: Peugeot, Renault…">
+
+      <label>Description des dégâts</label>
+      <textarea id="damage-query" placeholder="ex: pare choc avant gauche, aile arrière droite…"></textarea>
+
+      <div class="row2">
+        <div>
+          <label>Résultats (top_k)</label>
+          <input type="number" id="top-k" value="5" min="1" max="50">
+        </div>
+        <div>
+          <label>Score min.</label>
+          <input type="number" id="score-thresh" value="" placeholder="aucun" step="0.01">
+        </div>
+      </div>
+
+      <div class="toggle-row">
+        <span>Re-ranking cross-encoder</span>
+        <div class="toggle" id="rerank-toggle"></div>
+      </div>
+
+      <label>Poids sémantique</label>
+      <div class="weight-row">
+        <input type="range" id="sem-weight" min="0" max="1" step="0.05" value="0.6">
+        <span id="sem-val">0.60</span>
+      </div>
+
+      <label>Poids BM25</label>
+      <div class="weight-row">
+        <input type="range" id="bm25-weight" min="0" max="1" step="0.05" value="0.4">
+        <span id="bm25-val">0.40</span>
+      </div>
+
+      <button class="btn-search" id="search-btn" onclick="runSearch()">
+        Lancer la recherche
+      </button>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">Requête générée</div>
+      <div class="api-badge" id="api-preview">—</div>
+    </div>
+
+  </aside>
+
+  <!-- RESULTS -->
+  <main>
+    <div class="results-header">
+      <div class="results-count" id="results-count"></div>
+    </div>
+    <div id="results-container">
+      <div class="empty-state">
+        <div class="empty-icon">🔍</div>
+        <p>Lancez une recherche pour afficher les rapports similaires.</p>
+      </div>
+    </div>
+  </main>
+
+</div>
+
+<script>
+let rerank = false;
+
+// Toggle
+document.getElementById('rerank-toggle').addEventListener('click', function() {
+  rerank = !rerank;
+  this.classList.toggle('on', rerank);
+  updatePreview();
+});
+
+// Sliders
+['sem', 'bm25'].forEach(key => {
+  const slider = document.getElementById(`${key}-weight`);
+  const span   = document.getElementById(`${key}-val`);
+  slider.addEventListener('input', () => {
+    span.textContent = parseFloat(slider.value).toFixed(2);
+    updatePreview();
+  });
+});
+
+['marque', 'damage-query', 'top-k', 'score-thresh', 'api-url'].forEach(id => {
+  document.getElementById(id).addEventListener('input', updatePreview);
+});
+
+function updatePreview() {
+  const base = document.getElementById('api-url').value.replace(/\/$/, '');
+  const marque = document.getElementById('marque').value;
+  const dq     = document.getElementById('damage-query').value;
+  const topk   = document.getElementById('top-k').value;
+  const thresh = document.getElementById('score-thresh').value;
+  const sem    = document.getElementById('sem-weight').value;
+  const bm25   = document.getElementById('bm25-weight').value;
+
+  let preview = `<span style="color:var(--accent2)">POST</span> ${base}/search\n\n`;
+  preview += `{<br>`;
+  if (marque) preview += `&nbsp;&nbsp;"marque": "${marque}",<br>`;
+  if (dq)     preview += `&nbsp;&nbsp;"damage_query": "${dq.slice(0,40)}${dq.length > 40 ? '…' : ''}",<br>`;
+  preview += `&nbsp;&nbsp;"top_k": ${topk},<br>`;
+  preview += `&nbsp;&nbsp;"semantic_weight": ${parseFloat(sem).toFixed(2)},<br>`;
+  preview += `&nbsp;&nbsp;"bm25_weight": ${parseFloat(bm25).toFixed(2)},<br>`;
+  preview += `&nbsp;&nbsp;"rerank": ${rerank}`;
+  if (thresh) preview += `,<br>&nbsp;&nbsp;"score_threshold": ${thresh}`;
+  preview += `\n}`;
+
+  document.getElementById('api-preview').innerHTML = preview;
+}
+
+// Health check
+async function checkHealth() {
+  const base = document.getElementById('api-url').value.replace(/\/$/, '');
+  const pill = document.getElementById('status-pill');
+  try {
+    const res = await fetch(`${base}/health`, { signal: AbortSignal.timeout(3000) });
+    if (res.ok) {
+      pill.innerHTML = '<div class="status-dot"></div> API connectée';
+      pill.style.background = 'var(--green-bg)';
+      pill.style.color = 'var(--green)';
+      pill.style.borderColor = 'rgba(52,211,153,0.2)';
+    } else throw new Error();
+  } catch {
+    pill.innerHTML = '<div class="status-dot" style="background:var(--red)"></div> API hors ligne';
+    pill.style.background = 'rgba(248,113,113,0.1)';
+    pill.style.color = 'var(--red)';
+    pill.style.borderColor = 'rgba(248,113,113,0.2)';
+  }
+}
+
+document.getElementById('api-url').addEventListener('change', checkHealth);
+checkHealth();
+setInterval(checkHealth, 15000);
+updatePreview();
+
+// Score color
+function scoreClass(s) {
+  if (s >= 0.7) return 'score-high';
+  if (s >= 0.4) return 'score-mid';
+  return 'score-low';
+}
+
+// Render results
+function renderResults(data) {
+  const container = document.getElementById('results-container');
+  const count     = document.getElementById('results-count');
+
+  if (!data.results || data.results.length === 0) {
+    count.innerHTML = '';
+    container.innerHTML = `<div class="empty-state">
+      <div class="empty-icon">🔍</div>
+      <p>Aucun résultat pour cette recherche.</p>
+    </div>`;
+    return;
+  }
+
+  count.innerHTML = `<strong>${data.total}</strong> rapport${data.total > 1 ? 's' : ''} trouvé${data.total > 1 ? 's' : ''}`;
+  container.innerHTML = data.results.map((r, i) => {
+    const scoreNum = (r.score || 0).toFixed(3);
+    const scClass  = scoreClass(r.score || 0);
+
+    // Price table
+    let priceHtml = '';
+    if (r.price_items && r.price_items.length > 0) {
+      const rows = r.price_items.map(it => `
+        <tr>
+          <td>${it.designation || '—'}</td>
+          <td>${it.prix_unitaire || '—'}</td>
+          <td>${it.montant || '—'}</td>
+        </tr>`).join('');
+      priceHtml = `
+        <div class="price-section">
+          <table class="price-table">
+            <thead><tr>
+              <th>Désignation</th>
+              <th>P.U</th>
+              <th>Montant</th>
+            </tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>`;
+    }
+
+    // Totals
+    const totals = [];
+    if (r.total_ht)  totals.push(`<div class="total-chip"><span class="lbl">Total HT</span><span class="val">${r.total_ht} DT</span></div>`);
+    if (r.tva)       totals.push(`<div class="total-chip"><span class="lbl">TVA</span><span class="val">${r.tva} DT</span></div>`);
+    if (r.total_net) totals.push(`<div class="total-chip"><span class="lbl">Net</span><span class="val">${r.total_net} DT</span></div>`);
+    if (r.total_ttc) totals.push(`<div class="total-chip"><span class="lbl">TTC</span><span class="val">${r.total_ttc} DT</span></div>`);
+    const totalsHtml = totals.length ? `<div class="totals-row">${totals.join('')}</div>` : '';
+
+    return `
+    <div class="card" style="animation-delay:${i * 0.05}s">
+      <div class="card-top">
+        <div>
+          <div class="card-rank">#${i + 1}</div>
+          <div class="filename-row">📄 ${r.filename || '—'}</div>
+        </div>
+        <div class="score-badge ${scClass}">${scoreNum}</div>
+      </div>
+
+      <div class="card-meta">
+        <div class="meta-item">
+          <div class="meta-label">Marque</div>
+          <div class="meta-value">${r.marque || '—'} ${r.type || ''}</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Immat.</div>
+          <div class="meta-value">${r.immatriculation || '—'}</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Date accident</div>
+          <div class="meta-value">${r.date_accident || '—'}</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Assuré</div>
+          <div class="meta-value">${r.assure || '—'}</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Dossier</div>
+          <div class="meta-value">${r.numero_dossier || '—'}</div>
+        </div>
+      </div>
+
+      ${r.damage_text ? `<div class="damage-text">${r.damage_text}</div>` : ''}
+      ${priceHtml}
+      ${totalsHtml}
+    </div>`;
+  }).join('');
+}
+
+async function runSearch() {
+  const base  = document.getElementById('api-url').value.replace(/\/$/, '');
+  const btn   = document.getElementById('search-btn');
+  const cont  = document.getElementById('results-container');
+  const count = document.getElementById('results-count');
+
+  const marque = document.getElementById('marque').value.trim();
+  const dq     = document.getElementById('damage-query').value.trim();
+
+  if (!marque && !dq) {
+    cont.innerHTML = `<div class="error-box">⚠️ Veuillez renseigner au moins la marque ou une description des dégâts.</div>`;
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Recherche…';
+  count.innerHTML = '';
+  cont.innerHTML = `<div class="loading"><div class="spinner"></div>Analyse en cours…</div>`;
+
+  const body = {
+    marque:           marque || null,
+    damage_query:     dq     || null,
+    top_k:            parseInt(document.getElementById('top-k').value) || 5,
+    semantic_weight:  parseFloat(document.getElementById('sem-weight').value),
+    bm25_weight:      parseFloat(document.getElementById('bm25-weight').value),
+    rerank:           rerank,
+  };
+
+  const thresh = document.getElementById('score-thresh').value;
+  if (thresh !== '') body.score_threshold = parseFloat(thresh);
+
+  try {
+    const res  = await fetch(`${base}/search`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ detail: res.statusText }));
+      throw new Error(err.detail || 'Erreur serveur');
+    }
+
+    const data = await res.json();
+    renderResults(data);
+  } catch (e) {
+    cont.innerHTML = `<div class="error-box">❌ ${e.message}</div>`;
+    count.innerHTML = '';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Lancer la recherche';
+  }
+}
+
+// Submit on Enter in inputs (not textarea)
+document.querySelectorAll('input').forEach(inp => {
+  inp.addEventListener('keydown', e => {
+    if (e.key === 'Enter') runSearch();
+  });
+});
+</script>
+</body>
+</html>

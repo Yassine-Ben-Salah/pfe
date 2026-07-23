@@ -1,0 +1,170 @@
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+  animation: fadeUp 0.3s ease both;
+  box-shadow: var(--shadow-sm);
+}
+
+.card:hover {
+  border-color: rgba(37, 99, 235, 0.18);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.cardTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.rank,
+.filename,
+.pageBadge {
+  font-family: var(--font-mono);
+}
+
+.rank {
+  font-size: 0.75rem;
+  color: var(--gray-500);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.filename {
+  font-size: 0.95rem;
+  color: var(--gray-700);
+}
+
+.scoreBadge {
+  font-size: 0.8rem;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.1);
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.scoreHigh { background: rgba(52, 211, 153, 0.12); color: #22c55e; }
+.scoreMid { background: rgba(251, 191, 36, 0.12); color: #fbbf24; }
+.scoreLow { background: rgba(248, 113, 113, 0.12); color: #ef4444; }
+
+.metaGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+
+.metaItem {
+  background: var(--bg2);
+  border-radius: 16px;
+  padding: 12px;
+  min-width: 0;
+}
+
+.metaLabel {
+  font-size: 0.75rem;
+  color: var(--gray-500);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.metaValue {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--gray-800);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.damageText {
+  font-size: 0.95rem;
+  color: var(--gray-600);
+  line-height: 1.7;
+  padding: 1rem 1rem;
+  background: var(--bg2);
+  border-radius: 16px;
+  margin-bottom: 1rem;
+  border-left: 4px solid var(--accent);
+}
+
+.priceSection {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.priceTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.priceTable thead tr {
+  background: var(--bg2);
+}
+
+.priceTable th {
+  padding: 10px 12px;
+  text-align: left;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gray-500);
+  font-weight: 700;
+}
+
+.priceTable th:nth-child(2),
+.priceTable td:nth-child(2),
+.priceTable th:last-child,
+.priceTable td:last-child {
+  text-align: right;
+}
+
+.priceTable td {
+  padding: 10px 12px;
+  color: var(--gray-600);
+  border-top: 1px solid var(--border);
+}
+
+.totalsRow {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 8px 14px;
+}
+
+.chipLabel {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--gray-500);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.chipValue {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--gray-800);
+  font-family: var(--font-mono);
+}

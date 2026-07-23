@@ -1,0 +1,62 @@
+[
+  {
+    "marque": null,
+    "type": null,
+    "immatriculation": null,
+    "date_accident": null,
+    "numero_dossier": null,
+    "montant_total": null,
+    "assure": null,
+    "damage_text": "Le véhicule en question a subi un choc sur le tiers arrière gauche. Aile arrière gauche, porte arrière gauche entassées et\ncabossées. Pare-chocs arrière cassé. Trin arrière endommagé.Ce qui nécessite dressage des parties accidentées.Réparation\ntrain arrière. Remplacement des pièces citées en fourniture. Masticage, lustrage et peinture couleur correspondante.",
+    "semantic_text": "Le véhicule en question a subi un choc sur le tiers arrière gauche. Aile arrière gauche, porte arrière gauche entassées et\ncabossées. Pare-chocs arrière cassé. Trin arrière endommagé.Ce qui nécessite dressage des parties accidentées.Réparation\ntrain arrière. Remplacement des pièces citées en fourniture. Masticage, lustrage et peinture couleur correspondante.",
+    "filename": "rapport1.pdf"
+  },
+  {
+    "marque": "CITROEN",
+    "type": "VBBHXH",
+    "immatriculation": "7208TU238",
+    "date_accident": "04/05/2025",
+    "numero_dossier": "202504008078",
+    "montant_total": "3 796.100",
+    "assure": "STE LA FIRMA",
+    "damage_text": "P/CHOC AV,\ndéformés, défoncés, cabossés, torsadés, cassés, évidés, sectionnés, pliés, refoulés, brisés, tordus,\ncisaillés ou gauchis. La remise en état du véhicule nécessite des travaux de dressage des parties\ndéformées, le remplacement des pièces citées en fourniture et peinture en couleur correspondante.",
+    "semantic_text": "CITROEN | P/CHOC AV,\ndéformés, défoncés, cabossés, torsadés, cassés, évidés, sectionnés, pliés, refoulés, brisés, tordus,\ncisaillés ou gauchis. La remise en état du véhicule nécessite des travaux de dressage des parties\ndéformées, le remplacement des pièces citées en fourniture et peinture en couleur correspondante.",
+    "filename": "rapport2.pdf"
+  },
+  {
+    "marque": "KIA",
+    "type": "TAS6K3615",
+    "immatriculation": "2560 TU 175",
+    "date_accident": null,
+    "numero_dossier": "202504002384",
+    "montant_total": "1 811,025",
+    "assure": "TURKI OUMAYMA",
+    "damage_text": "Choc percutant le tiers avant gauche du véhicule : Aile Av G entassée et déformée ; Pare-\nchocs Av , Grille centrale et support Av G cassés.",
+    "semantic_text": "KIA | Choc percutant le tiers avant gauche du véhicule : Aile Av G entassée et déformée ; Pare-\nchocs Av , Grille centrale et support Av G cassés.",
+    "filename": "rapport3.pdf"
+  },
+  {
+    "marque": "Volkswagen",
+    "type": "3C20A1",
+    "immatriculation": "9242 TU 136",
+    "date_accident": null,
+    "numero_dossier": "202504013706",
+    "montant_total": "1.999,080",
+    "assure": "CHAABANE Ridha",
+    "damage_text": "Pare-chocs AR, Spoiler INF, 2Support pare choc Ar, Plage Ar, 2Baguette\npare-chocs Ar.",
+    "semantic_text": "Volkswagen | Pare-chocs AR, Spoiler INF, 2Support pare choc Ar, Plage Ar, 2Baguette\npare-chocs Ar.",
+    "filename": "rapport4.pdf"
+  },
+  {
+    "marque": "Citroen",
+    "type": "FCHFXC",
+    "immatriculation": "7097TU131",
+    "date_accident": null,
+    "numero_dossier": "202504025461",
+    "montant_total": null,
+    "assure": "IBTACH BELHASSAN",
+    "damage_text": "Sigle Av, Spoiler Ar, Baguette pare chocs Av G, Optique D, Optique G, Baguette h",
+    "semantic_text": "Citroen | Sigle Av, Spoiler Ar, Baguette pare chocs Av G, Optique D, Optique G, Baguette h",
+    "filename": "rapport5.pdf"
+  }
+]

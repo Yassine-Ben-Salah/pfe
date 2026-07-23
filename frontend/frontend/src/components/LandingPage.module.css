@@ -1,0 +1,22 @@
+.landingPage {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 35%, var(--bg1) 100%);
+}
+
+.main {
+  flex: 1;
+  position: relative;
+  padding-top: calc(var(--spacing-4xl) + 1rem);
+  animation: fadeInUp 0.55s ease both;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+:global([data-section]) {
+  scroll-margin-top: 100px;
+}
